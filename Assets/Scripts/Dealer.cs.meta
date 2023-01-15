@@ -3,7 +3,9 @@ guid: 08079ebe637a5a949ba8e43ba38ae082
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - CardAtlas: {fileID: 4343727234628468602, guid: 794931ccc21d3ad43bdbaa067fed50c5, type: 2}
+  - card: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
