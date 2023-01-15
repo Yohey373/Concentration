@@ -13,7 +13,11 @@ public class Dealer : MonoBehaviour
     [SerializeField]
     private SpriteAtlas CardAtlas;
 
-    public Image card;
+    public Image CardImage;
+
+    // カードを生むルート
+    [SerializeField]
+    private RectTransform cardBG;
     
     // Start is called before the first frame update
     private void Start()
@@ -27,11 +31,23 @@ public class Dealer : MonoBehaviour
         // clubの1
         // Linqにおける例：any
         // ラムダ式でboolを判定し、List内に判定条件に合致するかtrueかfalseで返す。
-        var clubCardsInHeartCard = Deck.CardDeck.Any(card => card.CardSuit == Card.Suit.Heart);
+        var clubCardsInHeartCard = clubCards.Any(card => card.CardSuit == Card.Suit.Heart);
         // false
 
-        // カードを文字列をフックに表示する。
-        card.sprite = CardAtlas.GetSprite($"Card_{((int)clubOne.CardSuit * 13) + clubOne.Number - 1}");
+        foreach (var card in Deck.CardDeck)
+        {
+            var cardImage = Instantiate(CardImage, cardBG);
+            // カードを文字列をフックに表示する。
+            //cardImage.sprite = CardAtlas.GetSprite($"Card_{((int)card.CardSuit * 13) + card.Number - 1}");
+            cardImage.sprite = CardAtlas.GetSprite("Card_54");
+
+            var button = cardImage.gameObject.AddComponent<Button>();
+
+            button.onClick.AddListener(() =>
+            { 
+               cardImage.sprite = CardAtlas.GetSprite($"Card_{((int)card.CardSuit * 13) + card.Number - 1}");
+            });
+        }
 
         Debug.Log($"スート：{Deck.CardDeck.FirstOrDefault().CardSuit} " + 
             $"数字：{Deck.CardDeck.FirstOrDefault().Number}");
