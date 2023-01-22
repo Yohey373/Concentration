@@ -33,6 +33,11 @@ public class Dealer : MonoBehaviour
     [SerializeField]
     private RectTransform cardBG;
 
+    public RectTransform GetCardBGRoot
+    {
+        get { return cardBG; }
+    }
+
     [SerializeField]
     private ConcentrationGameProgressionManager concentrationGameProgressionManager;
 
@@ -41,6 +46,11 @@ public class Dealer : MonoBehaviour
 
     [SerializeField]
     private ConcentrationPlayerBase CPU;
+
+    public ConcentrationPlayerBase GetCPUConcentrationPlayer
+    {
+        get { return CPU; }
+    }
 
     public int GetPlayerCardCount
     {
@@ -88,7 +98,6 @@ public class Dealer : MonoBehaviour
                 switch (ActorTurn) 
                 {
                     
-                    
                     // PlayerÇÃÉ^Å[ÉìÇæÇ¡ÇΩÇÁ
                     case Turn.Player:
                         Player.CardChoice(card, cardImage);
@@ -98,6 +107,7 @@ public class Dealer : MonoBehaviour
                             cardImage.sprite = CardAtlas.GetSprite($"Card_54");
                             Player.currentChoiceCardImage.sprite = CardAtlas.GetSprite($"Card_54");
                             ActorTurn = Turn.CPU;
+                            CPU.IsMyTurn = true;
                             return;
                         }
                         break;
@@ -110,6 +120,7 @@ public class Dealer : MonoBehaviour
                             cardImage.sprite = CardAtlas.GetSprite($"Card_54");
                             CPU.currentChoiceCardImage.sprite = CardAtlas.GetSprite($"Card_54");
                             ActorTurn = Turn.Player;
+                            Player.IsMyTurn = true;
                             return;
                         }
                         break;
