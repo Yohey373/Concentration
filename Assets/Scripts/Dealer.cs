@@ -15,9 +15,30 @@ public class Dealer : MonoBehaviour
 
     public Image CardImage;
 
+    // ディーラーにターンを判定してもらう
+    public enum Turn
+    {
+        Player,
+        CPU
+    }
+
+    public Turn ActorTurn = Turn.Player;
+
+    // 1つ前に選択したカード
+    private Card currentCard;
+    // 1つ前に選択したカードイメージ
+    private Image currentCardImage;
+
     // カードを生むルート
     [SerializeField]
     private RectTransform cardBG;
+
+    [SerializeField]
+    private ConcentrationPlayerBase Player;
+
+    [SerializeField]
+    private ConcentrationPlayerBase CPU;
+
     
     // Start is called before the first frame update
     private void Start()
@@ -44,8 +65,20 @@ public class Dealer : MonoBehaviour
             var button = cardImage.gameObject.AddComponent<Button>();
 
             button.onClick.AddListener(() =>
-            { 
-               cardImage.sprite = CardAtlas.GetSprite($"Card_{((int)card.CardSuit * 13) + card.Number - 1}");
+            {
+                switch (ActorTurn) 
+                { 
+                    // Playerのターンだったら
+                    case Turn.Player:
+                        Player.CardChoice(card, cardImage);
+                        break;
+                    // CPUのターンだったら
+                    case Turn.CPU:
+                        CPU.CardChoice(card, cardImage);
+                        break;
+                }
+                
+                cardImage.sprite = CardAtlas.GetSprite($"Card_{((int)card.CardSuit * 13) + card.Number - 1}");
             });
         }
 
