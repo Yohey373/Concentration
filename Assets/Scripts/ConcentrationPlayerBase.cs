@@ -33,6 +33,8 @@ public class ConcentrationPlayerBase : MonoBehaviour
             currentChoiceCard = null;
             // 自分のターンを続行
             IsMyTurn = true;
+            // スコアを加算
+            Score += 2;
         }
         else
         {
