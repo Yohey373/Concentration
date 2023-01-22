@@ -71,10 +71,26 @@ public class Dealer : MonoBehaviour
                     // Playerのターンだったら
                     case Turn.Player:
                         Player.CardChoice(card, cardImage);
+                        if (!Player.IsMyTurn)
+                        {
+                            // 選択されたカードを裏向ける
+                            cardImage.sprite = CardAtlas.GetSprite($"Card_54");
+                            Player.currentChoiceCardImage.sprite = CardAtlas.GetSprite($"Card_54");
+                            ActorTurn = Turn.CPU;
+                            return;
+                        }
                         break;
                     // CPUのターンだったら
                     case Turn.CPU:
                         CPU.CardChoice(card, cardImage);
+                        if (!CPU.IsMyTurn)
+                        {
+                            // 選択されたカードを裏向ける
+                            cardImage.sprite = CardAtlas.GetSprite($"Card_54");
+                            CPU.currentChoiceCardImage.sprite = CardAtlas.GetSprite($"Card_54");
+                            ActorTurn = Turn.Player;
+                            return;
+                        }
                         break;
                 }
                 
