@@ -25,6 +25,12 @@ public class ConcentrationPlayerBase : MonoBehaviour
             return;
         }
 
+        // 同じカードを選んでいる場合は帰る
+        if (choiceCard == currentChoiceCard)
+        {
+            return;
+        }
+
         if (currentChoiceCard.Number == choiceCard.Number)
         {
             // ペアがそろったので消す

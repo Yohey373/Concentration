@@ -34,14 +34,26 @@ public class Dealer : MonoBehaviour
     private RectTransform cardBG;
 
     [SerializeField]
+    private ConcentrationGameProgressionManager concentrationGameProgressionManager;
+
+    [SerializeField]
     private ConcentrationPlayerBase Player;
 
     [SerializeField]
     private ConcentrationPlayerBase CPU;
 
-    
+    public int GetPlayerCardCount
+    {
+        get { return Player.Score; }
+    }
+
+    public int GetCPUCardCount
+    {
+        get { return CPU.Score; }
+    }
+
     // Start is called before the first frame update
-    private void Start()
+    public void Deal()
     {
         Deck.GetDeck();
         
@@ -66,8 +78,17 @@ public class Dealer : MonoBehaviour
 
             button.onClick.AddListener(() =>
             {
+                // ゲームのステートがChoice以外だったら帰る
+                if (concentrationGameProgressionManager.GetGameStates !=
+                ConcentrationGameProgressionManager.GameStates.Choice)
+                {
+                    return;
+                }
+
                 switch (ActorTurn) 
-                { 
+                {
+                    
+                    
                     // Playerのターンだったら
                     case Turn.Player:
                         Player.CardChoice(card, cardImage);
