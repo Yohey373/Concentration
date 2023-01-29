@@ -65,7 +65,7 @@ public class Dealer : MonoBehaviour
     // Start is called before the first frame update
     public void Deal()
     {
-        Deck.GetDeck();
+        Deck.GetDeck(true);
 
         Player.PlayerInitialize(CardAtlas.GetSprite($"Card_54"), TurnChange);
         CPU.PlayerInitialize(CardAtlas.GetSprite($"Card_54"), TurnChange);
