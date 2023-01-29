@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Dealer : MonoBehaviour
 {
-    
+
     private Deck Deck = new Deck();
 
     [SerializeField]
@@ -66,7 +66,7 @@ public class Dealer : MonoBehaviour
     public void Deal()
     {
         Deck.GetDeck();
-        
+
         // Linqにおける例：Where
         // ラムダ式でboolを判定し。List内に判定条件に合致する要素を返す。
         var clubCards = Deck.CardDeck.Where(card => card.CardSuit == Card.Suit.Club).ToList();
@@ -94,44 +94,44 @@ public class Dealer : MonoBehaviour
                 {
                     return;
                 }
-
-                switch (ActorTurn) 
-                {
-                    
-                    // Playerのターンだったら
-                    case Turn.Player:
-                        Player.CardChoice(card, cardImage);
-                        if (!Player.IsMyTurn)
-                        {
-                            // 選択されたカードを裏向ける
-                            cardImage.sprite = CardAtlas.GetSprite($"Card_54");
-                            Player.currentChoiceCardImage.sprite = CardAtlas.GetSprite($"Card_54");
-                            ActorTurn = Turn.CPU;
-                            CPU.IsMyTurn = true;
-                            return;
-                        }
-                        break;
-                    // CPUのターンだったら
-                    case Turn.CPU:
-                        CPU.CardChoice(card, cardImage);
-                        if (!CPU.IsMyTurn)
-                        {
-                            // 選択されたカードを裏向ける
-                            cardImage.sprite = CardAtlas.GetSprite($"Card_54");
-                            CPU.currentChoiceCardImage.sprite = CardAtlas.GetSprite($"Card_54");
-                            ActorTurn = Turn.Player;
-                            Player.IsMyTurn = true;
-                            return;
-                        }
-                        break;
-                }
-                
                 cardImage.sprite = CardAtlas.GetSprite($"Card_{((int)card.CardSuit * 13) + card.Number - 1}");
+                StartCoroutine(CardChoiceVerification(card, cardImage));
             });
         }
+    }
 
-        Debug.Log($"スート：{Deck.CardDeck.FirstOrDefault().CardSuit} " + 
-            $"数字：{Deck.CardDeck.FirstOrDefault().Number}");
+    private IEnumerator CardChoiceVerification(Card card, Image cardImage)
+    {
+        switch (ActorTurn)
+        {
+
+            // Playerのターンだったら
+            case Turn.Player:
+                Player.CardChoice(card, cardImage);
+                yield return new WaitForSeconds(1f);
+
+                if (!Player.IsMyTurn)
+                {
+                    // 選択されたカードを裏向ける
+                    cardImage.sprite = CardAtlas.GetSprite($"Card_54");
+                    Player.currentChoiceCardImage.sprite = CardAtlas.GetSprite($"Card_54");
+                    ActorTurn = Turn.CPU;
+                    CPU.IsMyTurn = true;
+                }
+                break;
+            // CPUのターンだったら
+            case Turn.CPU:
+                CPU.CardChoice(card, cardImage);
+                if (!CPU.IsMyTurn)
+                {
+                    // 選択されたカードを裏向ける
+                    cardImage.sprite = CardAtlas.GetSprite($"Card_54");
+                    CPU.currentChoiceCardImage.sprite = CardAtlas.GetSprite($"Card_54");
+                    ActorTurn = Turn.Player;
+                    Player.IsMyTurn = true;
+                }
+                break;
+        }
     }
 
 }
