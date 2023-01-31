@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.U2D;
 using UnityEngine.UI;
+using TMPro;
 
 public class Dealer : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class Dealer : MonoBehaviour
 
     public Image CardImage;
 
-    // ƒfƒB[ƒ‰[‚Éƒ^[ƒ“‚ğ”»’è‚µ‚Ä‚à‚ç‚¤
+    // ï¿½fï¿½Bï¿½[ï¿½ï¿½ï¿½[ï¿½Éƒ^ï¿½[ï¿½ï¿½ï¿½ğ”»’è‚µï¿½Ä‚ï¿½ï¿½ç‚¤
     public enum Turn
     {
         Player,
@@ -24,12 +25,12 @@ public class Dealer : MonoBehaviour
 
     public Turn ActorTurn = Turn.Player;
 
-    // 1‚Â‘O‚É‘I‘ğ‚µ‚½ƒJ[ƒh
+    // 1ï¿½Â‘Oï¿½É‘Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½[ï¿½h
     private Card currentCard;
-    // 1‚Â‘O‚É‘I‘ğ‚µ‚½ƒJ[ƒhƒCƒ[ƒW
+    // 1ï¿½Â‘Oï¿½É‘Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½[ï¿½hï¿½Cï¿½ï¿½ï¿½[ï¿½W
     private Image currentCardImage;
 
-    // ƒJ[ƒh‚ğ¶‚Şƒ‹[ƒg
+    // ï¿½Jï¿½[ï¿½hï¿½ğ¶‚Şƒï¿½ï¿½[ï¿½g
     [SerializeField]
     private RectTransform cardBG;
 
@@ -62,6 +63,8 @@ public class Dealer : MonoBehaviour
         get { return CPU.Score; }
     }
 
+    public TextMeshProUGUI TurnOwnerText;
+
     // Start is called before the first frame update
     public void Deal()
     {
@@ -70,13 +73,13 @@ public class Dealer : MonoBehaviour
         Player.PlayerInitialize(CardAtlas.GetSprite($"Card_54"), TurnChange);
         CPU.PlayerInitialize(CardAtlas.GetSprite($"Card_54"), TurnChange);
 
-        // Linq‚É‚¨‚¯‚é—áFWhere
-        // ƒ‰ƒ€ƒ_®‚Åbool‚ğ”»’è‚µBList“à‚É”»’èğŒ‚É‡’v‚·‚é—v‘f‚ğ•Ô‚·B
+        // Linqï¿½É‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½FWhere
+        // ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½boolï¿½ğ”»’è‚µï¿½BListï¿½ï¿½ï¿½É”ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éï¿½ï¿½vï¿½ï¿½ï¿½ï¿½vï¿½fï¿½ï¿½Ô‚ï¿½ï¿½B
         var clubCards = Deck.CardDeck.Where(card => card.CardSuit == Card.Suit.Club).ToList();
         var clubOne = clubCards.FirstOrDefault();
-        // club‚Ì1
-        // Linq‚É‚¨‚¯‚é—áFany
-        // ƒ‰ƒ€ƒ_®‚Åbool‚ğ”»’è‚µAList“à‚É”»’èğŒ‚É‡’v‚·‚é‚©true‚©false‚Å•Ô‚·B
+        // clubï¿½ï¿½1
+        // Linqï¿½É‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Fany
+        // ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½boolï¿½ğ”»’è‚µï¿½AListï¿½ï¿½ï¿½É”ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éï¿½ï¿½vï¿½ï¿½ï¿½é‚©trueï¿½ï¿½falseï¿½Å•Ô‚ï¿½ï¿½B
         var clubCardsInHeartCard = clubCards.Any(card => card.CardSuit == Card.Suit.Heart);
         // false
 
@@ -89,11 +92,11 @@ public class Dealer : MonoBehaviour
         foreach (var card in Deck.CardDeck)
         {
             var cardImage = Instantiate(CardImage, cardBG);
-            // Instantiate‚³‚ê‚½cardImage‚©‚çCardButtonExtension‚ğæ“¾‚·‚é
+            // Instantiateï¿½ï¿½ï¿½ê‚½cardImageï¿½ï¿½ï¿½ï¿½CardButtonExtensionï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
             var cardButton = cardImage.gameObject.GetComponent<CardButtonExtension>();
-            // cardButton ‚Ìˆø”‚Åg‚¤•\¦‚·‚é—p‚Ì‰æ‘œ‚ğSpriteAtlas‚©‚çæ“¾‚·‚éB
+            // cardButton ï¿½Ìˆï¿½ï¿½ï¿½ï¿½Ågï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½Ì‰æ‘œï¿½ï¿½SpriteAtlasï¿½ï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½B
             var cardSprite = CardAtlas.GetSprite($"Card_{((int)card.CardSuit * 13) + card.Number - 1}");
-            // cardButton‚Ìˆø”‚Åg‚¤‰B‚·—p‚Ì‰æ‘œ‚ğSpriteAtlas‚©‚çæ“¾‚·‚éB
+            // cardButtonï¿½Ìˆï¿½ï¿½ï¿½ï¿½Ågï¿½ï¿½ï¿½Bï¿½ï¿½ï¿½pï¿½Ì‰æ‘œï¿½ï¿½SpriteAtlasï¿½ï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½B
             var hideCardSprite = CardAtlas.GetSprite($"Card_54");
             cardButton.Initialize(cardSprite, hideCardSprite, () =>
             {
@@ -109,14 +112,14 @@ public class Dealer : MonoBehaviour
             });
 
         }
-        // Y‚İI‚í‚Á‚Ä‚©‚ç1ƒtƒŒ[ƒ€‘Ò‚Â
+        // ï¿½Yï¿½İIï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½1ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ò‚ï¿½
         yield return new WaitForEndOfFrame();
-        // GridLayoutGroup‚ğŠO‚·
+        // GridLayoutGroupï¿½ï¿½ï¿½Oï¿½ï¿½
         cardBG.GetComponent<GridLayoutGroup>().enabled = false;
     }
 
     /// <summary>
-    /// ƒ^[ƒ“•ÏX‚Ìƒƒ\ƒbƒh
+    /// ï¿½^ï¿½[ï¿½ï¿½ï¿½ÏXï¿½Ìƒï¿½ï¿½\ï¿½bï¿½h
     /// </summary>
     private void TurnChange()
     {
@@ -127,6 +130,7 @@ public class Dealer : MonoBehaviour
                 {
                     ActorTurn = Turn.CPU;
                     CPU.IsMyTurn = true;
+                    TurnOwnerText.text = "CPU Turn";
                 }
                 break;
             case Turn.CPU:
@@ -134,6 +138,7 @@ public class Dealer : MonoBehaviour
                 {
                     ActorTurn = Turn.Player;
                     Player.IsMyTurn = true;
+                    TurnOwnerText.text = "Player Turn";
                 }
                 break;
         }
