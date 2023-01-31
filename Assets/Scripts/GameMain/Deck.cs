@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 public class Deck
 {
@@ -14,7 +15,7 @@ public class Deck
     /// 昇順のデックをGetする。
     /// </summary>
     /// <returns></returns>
-    public List<Card> GetDeck()
+    public List<Card> GetDeck(bool isShuffle = false)
     {
         // 一度作られたデッキがある場合はCardDeckを返す
         if (CardDeck.FirstOrDefault() != null)
@@ -27,6 +28,13 @@ public class Deck
         {
             CardDeck.Add(new Card(CardHelper.CardSuitJudgge(i), CardHelper.CardNumJudge(i)));
         }
+
+        // シャッフルする場合はCardDeckをGuidを使って並び替える
+        if (isShuffle)
+        {
+            return CardDeck = CardDeck.OrderBy(card => Guid.NewGuid()).ToList();
+        }
+
         return CardDeck;
     }
 
