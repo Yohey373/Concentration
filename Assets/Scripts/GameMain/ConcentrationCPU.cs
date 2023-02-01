@@ -7,6 +7,8 @@ using TMPro;
 public class ConcentrationCPU : ConcentrationPlayerBase
 {
     public TextMeshProUGUI ScoreText;
+    public GameObject mainCamera;
+    
     /// <summary>
     /// 
     /// </summary>
@@ -14,7 +16,16 @@ public class ConcentrationCPU : ConcentrationPlayerBase
     /// <param name="choiceCardImage"></param>
     public override void CardChoice(Card choiceCard, Image choiceCardImage)
     {
+        var gameMode = mainCamera.GetComponent<ConcentrationGameProgressionManager>().GetGameMode;
+        
         base.CardChoice(choiceCard, choiceCardImage);
-        ScoreText.text = $"CPUScore:{Score}";
+        
+        if(gameMode == 0){
+            ScoreText.text = $"Player2 Score:{Score}";
+        }
+        else {
+            ScoreText.text = $"CPU Score:{Score}";
+        }
+
     }
 }

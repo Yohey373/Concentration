@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ConcentrationGameProgressionManager : MonoBehaviour
 {
@@ -35,6 +36,12 @@ public class ConcentrationGameProgressionManager : MonoBehaviour
     {
         get { return gameState; }
     }
+
+    public GameModes GetGameMode
+    {
+        get { return GameMode; }
+    }
+
     private void Update()
     {
         switch (gameState)
@@ -43,7 +50,7 @@ public class ConcentrationGameProgressionManager : MonoBehaviour
                 gameState = GameStates.Start;
                 break;
             case GameStates.Start:
-                // ƒXƒ^[ƒg‚Ì‰‰o‚È‚Ç‚µ‚½‚¢ê‡‚Í‚±‚±‚Åw’è‚·‚é
+                // ï¿½Xï¿½^ï¿½[ï¿½gï¿½ï¿½ï¿½Ì‰ï¿½ï¿½oï¿½È‚Ç‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½Í‚ï¿½ï¿½ï¿½ï¿½Åwï¿½è‚·ï¿½ï¿½
                 gameState = GameStates.Deal;
                 break;
             case GameStates.Deal:
@@ -52,7 +59,7 @@ public class ConcentrationGameProgressionManager : MonoBehaviour
                 break;
 
             case GameStates.Choice:
-                // CPU‚ÌƒJ[ƒh‚ğƒRƒ“ƒsƒ…[ƒ^[‚ª‘I‚Ôê‡‚Í
+                // CPUï¿½ÌƒJï¿½[ï¿½hï¿½ï¿½ï¿½Rï¿½ï¿½ï¿½sï¿½ï¿½ï¿½[ï¿½^ï¿½[ï¿½ï¿½ï¿½Iï¿½Ôê‡ï¿½ï¿½
                 if (GameMode == GameModes.CPUCardIsComputersChoice)
                 {
                     if (Dealer.GetCPUConcentrationPlayer.IsMyTurn)
@@ -88,11 +95,11 @@ public class ConcentrationGameProgressionManager : MonoBehaviour
             case GameStates.GameEnd:
                 if (Dealer.GetPlayerCardCount > Dealer.GetCPUCardCount)
                 {
-                    Debug.Log("Player‚ÌŸ‚¿");
+                    Debug.Log("Playerï¿½Ìï¿½ï¿½ï¿½");
                 }
                 else
                 {
-                    Debug.Log("CPU‚ÌŸ‚¿");
+                    Debug.Log("CPUï¿½Ìï¿½ï¿½ï¿½");
                 }
                 break;
         }
